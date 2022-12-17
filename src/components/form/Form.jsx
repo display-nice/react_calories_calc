@@ -13,11 +13,11 @@ export default class Form extends React.Component {
 		}
 	}
 	render() {
-		const {getGender} = this.props;
+		const {getGender, getStats} = this.props;
 		return (
 			<form className="counter__form form" name="counter" action="#" method="post">
 				<FormGender getGender={(e) => getGender(e)}/>
-				<FormStats/>
+				<FormStats getStats={(e) => getStats(e)}/>
 				<FormActivity/>
 				<FormCalcAndClear/>			
 			</form>
