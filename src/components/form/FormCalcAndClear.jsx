@@ -1,17 +1,23 @@
 import React from "react";
 
-const FormCalcAndClear = () => {
+const FormCalcAndClear = (props) => {
+	const {btnsOff} = props;
 	return (
 		<div className="form__submit">
 			<button
 				className="form__submit-button button"
 				name="submit"
 				type="submit"
-				disabled
+				disabled={btnsOff}
 			>
 				Рассчитать
 			</button>
-			<button className="form__reset-button" name="reset" type="reset" disabled>
+			<button
+				className="form__reset-button"
+				name="reset"
+				type="reset"
+				disabled={btnsOff}
+			>
 				<svg
 					width="24"
 					height="24"

@@ -1,6 +1,7 @@
 import React from "react";
 
-const FormActivity = () => {
+const FormActivity = ({getActivity}) => {
+
 	return (
 		<fieldset className="form__item">
 			<legend className="heading">Физическая активность</legend>
@@ -8,6 +9,7 @@ const FormActivity = () => {
 				<li className="radio">
 					<div className="radio__wrapper">
 						<input
+							onClick={getActivity}
 							id="activity-minimal"
 							name="activity"
 							value="min"
@@ -24,6 +26,7 @@ const FormActivity = () => {
 				<li className="radio">
 					<div className="radio__wrapper">
 						<input
+							onClick={getActivity}
 							id="activity-low"
 							name="activity"
 							value="low"
@@ -39,6 +42,7 @@ const FormActivity = () => {
 				<li className="radio">
 					<div className="radio__wrapper">
 						<input
+							onClick={getActivity}
 							id="activity-medium"
 							name="activity"
 							value="medium"
@@ -52,6 +56,7 @@ const FormActivity = () => {
 				<li className="radio">
 					<div className="radio__wrapper">
 						<input
+							onClick={getActivity}
 							id="activity-high"
 							name="activity"
 							value="high"
@@ -65,6 +70,7 @@ const FormActivity = () => {
 				<li className="radio">
 					<div className="radio__wrapper">
 						<input
+							onClick={getActivity}
 							id="activity-maximal"
 							name="activity"
 							value="max"

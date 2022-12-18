@@ -1,26 +1,7 @@
 import React from 'react';
 
 export default class FormStats extends React.Component {
-	constructor(props) {
-		super(props);
-	}
 	
-	// makeNewStats = () => {
-
-	// }
-
-
-	// handleInput = (e) => {	
-	// 	switch (e.target.name) {
-	// 		case 'age':
-	// 			// console.log('age');
-				
-	// 			break;
-	// 		default:
-	// 			console.log('default case happened');
-	// 			break;
-	// 	}
-	// }
 	render() {
 		const {getStats} = this.props;
 		return (

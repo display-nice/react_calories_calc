@@ -17,6 +17,7 @@ class App extends React.Component {
 				weight: "",
 			},
 			activity: "minimal",
+			btnsOff: true
 		};
 	}
 	getGender = (e) => {
@@ -39,14 +40,43 @@ class App extends React.Component {
 			);
 		}
 	};
-	
+
 	getStats = (e) => {
 		let newStats = this.state.stats;
 		newStats[e.target.name] = e.target.value;
 		this.setState({
 			stats: newStats
-		}, () => console.log(`в стейте: age = ${this.state.stats.age}, height = ${this.state.stats.height}, weight = ${this.state.stats.weight}`))
+		}, () => {
+				console.log(`в стейте: age = ${this.state.stats.age}, height = ${this.state.stats.height}, weight = ${this.state.stats.weight}`);
+				console.log("работаем с кнопками...");
+				this.toggleBtns();
+			})
 	};
+
+	getActivity = (e) => {
+		this.setState({
+			activity: e.target.value
+		}, () => console.log(`this.state.activity after change = ${this.state.activity}`))
+	}
+
+	toggleBtns = () => {
+		const stats = Object.values(this.state.stats);
+		let summ = 0;
+		for (let i = 0; i <= stats.length; ++i) {
+			summ += Boolean(stats[i]);
+		}
+		if (summ === 3) {
+			console.log(`Кнопки активированы`);
+			this.setState({
+				btnsOff: false
+			})
+		} else {
+			console.log(`Кнопки деактивированы`);
+			this.setState({
+				btnsOff: true
+			})
+		}
+	}
 
 	render() {
 		return (
@@ -54,7 +84,8 @@ class App extends React.Component {
 				<div className="container">
 					<article className="counter">
 						<Header />
-						<Form getGender={this.getGender} getStats={this.getStats} />
+						<button onClick={this.toggleBtns}>Test</button>
+						<Form getGender={this.getGender} getStats={this.getStats} getActivity={this.getActivity} btnsOff={this.state.btnsOff}/>
 						<Result />
 					</article>
 				</div>
