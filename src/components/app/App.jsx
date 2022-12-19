@@ -21,24 +21,9 @@ class App extends React.Component {
 		};
 	}
 	getGender = (e) => {
-		if (e.target.value === "male") {
-			console.log(`произошёл клик на кнопке ${e.target.value}`);
-			this.setState(
-				{
-					gender: "male",
-				},
-				() => console.log(`установлено значение ${this.state.gender}`)
-			);
-		}
-		if (e.target.value === "female") {
-			console.log(`произошёл клик на кнопке ${e.target.value}`);
-			this.setState(
-				{
-					gender: "female",
-				},
-				() => console.log(`установлено значение ${this.state.gender}`)
-			);
-		}
+		this.setState({
+			gender: e.target.value
+		}, () => console.log(`установлено значение ${this.state.gender}` ))
 	};
 
 	getStats = (e) => {
