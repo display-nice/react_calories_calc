@@ -18,6 +18,12 @@ class App extends React.Component {
 			},
 			activity: "minimal",
 			btnsOff: true,
+			resultIsVisible: false,
+			calories: {
+				norm: 3800,
+				min: 3300,
+				max: 4000
+			}
 		};
 	}
 	getGender = (e) => {
@@ -111,16 +117,20 @@ class App extends React.Component {
 				activityCoeff
 		);
 
-		let calories = {};
-		calories.norm = N; // ккал для поддержания веса
-		calories.min = Math.round(N - 0.15 * N); // ккал для снижения веса
-		calories.max = Math.round(N + 0.15 * N); // ккал для набора веса
-		console.log(calories);
-		return(calories)
+		let newCalories = {};
+		newCalories.norm = N; // ккал для поддержания веса
+		newCalories.min = Math.round(N - 0.15 * N); // ккал для снижения веса
+		newCalories.max = Math.round(N + 0.15 * N); // ккал для набора веса
+		console.log(newCalories);
+		this.setState({
+			calories: newCalories,
+			resultIsVisible: true
+		})
 	}
-
-	clear = () => {
-		
+	hideResult = () => {
+		this.setState({
+			resultIsVisible: false
+		})
 	}
 
 	render() {
@@ -129,15 +139,15 @@ class App extends React.Component {
 				<div className="container">
 					<article className="counter">
 						<Header />
-						<button onClick={this.count}>Test</button>
 						<Form
 							getGender={this.getGender}
 							getStats={this.getStats}
 							getActivity={this.getActivity}
 							btnsOff={this.state.btnsOff}
 							count={this.count}
+							hideResult={this.hideResult}
 						/>
-						<Result />
+						<Result calories={this.state.calories} resultIsVisible={this.state.resultIsVisible}/>
 					</article>
 				</div>
 			</main>

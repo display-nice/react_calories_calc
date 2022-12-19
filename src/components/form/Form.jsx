@@ -10,7 +10,7 @@ export default class Form extends React.Component {
 		this.state = {};
 	}
 	render() {
-		const { getGender, getStats, getActivity, btnsOff, count } = this.props;
+		const { getGender, getStats, getActivity, btnsOff, count, hideResult } = this.props;
 		return (
 			<form
 				className="counter__form form"
@@ -32,6 +32,7 @@ export default class Form extends React.Component {
 						Рассчитать
 					</button>
 					<button
+						onClick={hideResult}
 						className="form__reset-button"
 						name="reset"
 						type="reset"
