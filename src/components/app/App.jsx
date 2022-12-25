@@ -16,22 +16,24 @@ class App extends React.Component {
 				height: "",
 				weight: "",
 			},
-			activity: "minimal",
-			btnsOff: true,
+			activity: "min",
+			calcBtnOff: true,
+			clearBtnOff: true,
 			resultIsVisible: false,
 			calories: {
 				norm: 3800,
 				min: 3300,
 				max: 4000
 			}
-		};
+		};		
 	}
+	
 	getGender = (e) => {
 		this.setState(
 			{
 				gender: e.target.value,
 			},
-			() => console.log(`установлено значение ${this.state.gender}`)
+			() => this.clearBtnSwitcher()
 		);
 	};
 
@@ -43,11 +45,8 @@ class App extends React.Component {
 				stats: newStats,
 			},
 			() => {
-				// console.log(
-				// 	`в стейте: age = ${this.state.stats.age}, height = ${this.state.stats.height}, weight = ${this.state.stats.weight}`
-				// );
-				// console.log("работаем с кнопками...");
-				this.toggleBtns();
+				this.calcBtnSwitcher();
+				this.clearBtnSwitcher();
 			}
 		);
 	};
@@ -57,12 +56,11 @@ class App extends React.Component {
 			{
 				activity: e.target.value,
 			},
-			() =>
-				console.log(`this.state.activity after change = ${this.state.activity}`)
+			() => this.clearBtnSwitcher()
 		);
 	};
 
-	toggleBtns = () => {
+	calcBtnSwitcher = () => {
 		const stats = Object.values(this.state.stats);
 		let summ = 0;
 		for (let i = 0; i <= stats.length; ++i) {
@@ -71,15 +69,40 @@ class App extends React.Component {
 		if (summ === 3) {
 			console.log(`Кнопки активированы`);
 			this.setState({
-				btnsOff: false,
+				calcBtnOff: false,
 			});
 		} else {
 			console.log(`Кнопки деактивированы`);
 			this.setState({
-				btnsOff: true,
+				calcBtnOff: true,
 			});
 		}
 	};
+
+	clearBtnSwitcher = () => {		
+		const current = {
+			gender: this.state.gender,
+			stats: {
+				age: this.state.stats.age,
+				height: this.state.stats.height,
+				weight: this.state.stats.weight,
+			},
+			activity: this.state.activity
+		}
+		console.log('defaults = ', this.defaults);
+		console.log('current = ', current);
+		if (JSON.stringify(current) === JSON.stringify(this.defaults)) {
+			console.log(`current = defaults`);
+			this.setState({
+				clearBtnOff: true
+			})
+		} else {
+			console.log(`current != defaults`);
+			this.setState({
+				clearBtnOff: false
+			})
+		}
+	}
 
 	count = (e) => {
 		e.preventDefault();
@@ -127,12 +150,26 @@ class App extends React.Component {
 			resultIsVisible: true
 		})
 	}
-	hideResult = () => {
-		this.setState({
-			resultIsVisible: false
-		})
-	}
 
+	resetForm = () => {
+		const defaults = {
+			gender: 'male',
+			stats: {
+				age: '',
+				height: '',
+				weight: '',
+			},
+			activity: 'min',
+		}
+		this.setState({
+			resultIsVisible: false,
+			gender: defaults.gender,
+			stats: defaults.stats,
+			activity: defaults.activity,
+			clearBtnOff: true
+		}, () => {console.log(this.state)})
+	}
+	
 	render() {
 		return (
 			<main className="main">
@@ -143,9 +180,13 @@ class App extends React.Component {
 							getGender={this.getGender}
 							getStats={this.getStats}
 							getActivity={this.getActivity}
-							btnsOff={this.state.btnsOff}
+							calcBtnOff={this.state.calcBtnOff}
+							clearBtnOff={this.state.clearBtnOff}
 							count={this.count}
-							hideResult={this.hideResult}
+							resetForm={this.resetForm}
+							gender={this.state.gender}
+							stats={this.state.stats}
+							activity={this.state.activity}
 						/>
 						<Result calories={this.state.calories} resultIsVisible={this.state.resultIsVisible}/>
 					</article>
