@@ -1,28 +1,6 @@
 import React from "react";
 
-const FormActivity = ({activity, getActivity}) => {
-	// let min, low, medium, high, max = false;
-	// const checkedActivity= (activity) => {
-	// 	// eslint-disable-next-line
-	// 	switch (activity) {
-	// 		case 'min':
-	// 			min = true;
-	// 			break;
-	// 		case 'low':
-	// 			low = true;
-	// 			break;
-	// 		case 'medium':
-	// 			medium = true;
-	// 			break;
-	// 		case 'high':
-	// 			high= true;
-	// 			break;
-	// 		case 'max':
-	// 			max = true;
-	// 			break;
-	// 	}
-	// }
-	// checkedActivity(activity);
+const FormActivity = ({ activity, getActivity }) => {
 	return (
 		<fieldset className="form__item">
 			<legend className="heading">Физическая активность</legend>
@@ -31,11 +9,11 @@ const FormActivity = ({activity, getActivity}) => {
 					<div className="radio__wrapper">
 						<input
 							onChange={getActivity}
-							checked={activity === 'min' ? true : false}
+							checked={activity === "min" ? true : false}
 							id="activity-minimal"
 							name="activity"
 							value="min"
-							type="radio"							
+							type="radio"
 							required
 						/>
 						<label htmlFor="activity-minimal">Минимальная</label>
@@ -48,7 +26,7 @@ const FormActivity = ({activity, getActivity}) => {
 					<div className="radio__wrapper">
 						<input
 							onChange={getActivity}
-							checked={activity === 'low' ? true : false}
+							checked={activity === "low" ? true : false}
 							id="activity-low"
 							name="activity"
 							value="low"
@@ -65,7 +43,7 @@ const FormActivity = ({activity, getActivity}) => {
 					<div className="radio__wrapper">
 						<input
 							onChange={getActivity}
-							checked={activity === 'medium' ? true : false}
+							checked={activity === "medium" ? true : false}
 							id="activity-medium"
 							name="activity"
 							value="medium"
@@ -80,7 +58,7 @@ const FormActivity = ({activity, getActivity}) => {
 					<div className="radio__wrapper">
 						<input
 							onChange={getActivity}
-							checked={activity === 'high' ? true : false}
+							checked={activity === "high" ? true : false}
 							id="activity-high"
 							name="activity"
 							value="high"
@@ -95,7 +73,7 @@ const FormActivity = ({activity, getActivity}) => {
 					<div className="radio__wrapper">
 						<input
 							onChange={getActivity}
-							checked={activity === 'max' ? true : false}
+							checked={activity === "max" ? true : false}
 							id="activity-maximal"
 							name="activity"
 							value="max"

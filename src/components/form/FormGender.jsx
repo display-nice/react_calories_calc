@@ -1,20 +1,6 @@
 import React from "react";
 
-const FormGender = ({gender, getGender}) => {
-	// let maleChecked, femaleChecked = false;
-	// const checkedGender = (gender) => {
-	// 	// eslint-disable-next-line
-	// 	switch (gender) {
-	// 		case 'male':
-	// 			maleChecked = true;
-	// 			break;
-	// 		case 'female':
-	// 			femaleChecked = true;
-	// 			break;
-	// 	}
-	// }
-	// checkedGender(gender);
-
+const FormGender = ({ gender, getGender }) => {
 	return (
 		<div className="form__item">
 			<h2 className="heading">Пол</h2>
@@ -22,13 +8,11 @@ const FormGender = ({gender, getGender}) => {
 				<li className="switcher__item">
 					<input
 						onChange={getGender}
-						// checked={maleChecked}
-						checked={gender === 'male' ? true : false}
+						checked={gender === "male" ? true : false}
 						id="gender-male"
 						name="gender"
 						value="male"
 						type="radio"
-						// defaultChecked
 						required
 					/>
 					<label htmlFor="gender-male">Мужчина</label>
@@ -36,8 +20,7 @@ const FormGender = ({gender, getGender}) => {
 				<li className="switcher__item">
 					<input
 						onChange={getGender}
-						// checked={femaleChecked}
-						checked={gender === 'female' ? true : false}
+						checked={gender === "female" ? true : false}
 						id="gender-female"
 						name="gender"
 						value="female"

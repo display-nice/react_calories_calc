@@ -1,10 +1,8 @@
 import React from "react";
 
-import Header from "../header/Header";
-import Form from "../form/Form";
-import Result from "../result/Result";
-
-const Context = React.createContext({});
+import Header from "@components/header/Header";
+import Form from "@components/form/Form";
+import Result from "@components/result/Result";
 
 class App extends React.Component {
 	constructor(props) {
@@ -23,11 +21,11 @@ class App extends React.Component {
 			calories: {
 				norm: 3800,
 				min: 3300,
-				max: 4000
-			}
-		};		
+				max: 4000,
+			},
+		};
 	}
-	
+
 	getGender = (e) => {
 		this.setState(
 			{
@@ -79,7 +77,7 @@ class App extends React.Component {
 		}
 	};
 
-	clearBtnSwitcher = () => {		
+	clearBtnSwitcher = () => {
 		const current = {
 			gender: this.state.gender,
 			stats: {
@@ -87,29 +85,32 @@ class App extends React.Component {
 				height: this.state.stats.height,
 				weight: this.state.stats.weight,
 			},
-			activity: this.state.activity
-		}
-		console.log('defaults = ', this.defaults);
-		console.log('current = ', current);
+			activity: this.state.activity,
+		};
+		console.log("defaults = ", this.defaults);
+		console.log("current = ", current);
 		if (JSON.stringify(current) === JSON.stringify(this.defaults)) {
 			console.log(`current = defaults`);
 			this.setState({
-				clearBtnOff: true
-			})
+				clearBtnOff: true,
+			});
 		} else {
 			console.log(`current != defaults`);
 			this.setState({
-				clearBtnOff: false
-			})
+				clearBtnOff: false,
+			});
 		}
-	}
+	};
 
 	count = (e) => {
 		e.preventDefault();
 		let genderCoeff;
-		if (this.state.gender === 'male') {genderCoeff = 5}
-		else if (this.state.gender === 'female') {genderCoeff = -161}
-		
+		if (this.state.gender === "male") {
+			genderCoeff = 5;
+		} else if (this.state.gender === "female") {
+			genderCoeff = -161;
+		}
+
 		let activityCoeff;
 		switch (this.state.activity) {
 			case "min":
@@ -147,29 +148,35 @@ class App extends React.Component {
 		console.log(newCalories);
 		this.setState({
 			calories: newCalories,
-			resultIsVisible: true
-		})
-	}
+			resultIsVisible: true,
+		});
+	};
 
 	resetForm = () => {
 		const defaults = {
-			gender: 'male',
+			gender: "male",
 			stats: {
-				age: '',
-				height: '',
-				weight: '',
+				age: "",
+				height: "",
+				weight: "",
 			},
-			activity: 'min',
-		}
-		this.setState({
-			resultIsVisible: false,
-			gender: defaults.gender,
-			stats: defaults.stats,
-			activity: defaults.activity,
-			clearBtnOff: true
-		}, () => {console.log(this.state)})
-	}
-	
+			activity: "min",
+		};
+		this.setState(
+			{
+				resultIsVisible: false,
+				gender: defaults.gender,
+				stats: defaults.stats,
+				activity: defaults.activity,
+				clearBtnOff: true,
+				calcBtnOff: true,
+			},
+			() => {
+				console.log(this.state);
+			}
+		);
+	};
+
 	render() {
 		return (
 			<main className="main">
@@ -188,7 +195,10 @@ class App extends React.Component {
 							stats={this.state.stats}
 							activity={this.state.activity}
 						/>
-						<Result calories={this.state.calories} resultIsVisible={this.state.resultIsVisible}/>
+						<Result
+							calories={this.state.calories}
+							resultIsVisible={this.state.resultIsVisible}
+						/>
 					</article>
 				</div>
 			</main>
@@ -196,4 +206,4 @@ class App extends React.Component {
 	}
 }
 
-export { App, Context };
+export { App };
