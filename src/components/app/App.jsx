@@ -24,8 +24,22 @@ class App extends React.Component {
 				max: 4000,
 			},
 		};
+		this.defaults = {
+			resultIsVisible: false,
+			gender: "male",
+			stats: {
+				age: "",
+				height: "",
+				weight: "",
+			},
+			activity: "min",
+			clearBtnOff: true,
+			calcBtnOff: true,
+		};
 	}
 
+	// Функция получает значение пола и записывает его в стейт
+	// затем запускается проверка нужно ли разблокировать кнопку очистки формы
 	getGender = (e) => {
 		this.setState(
 			{
@@ -35,6 +49,9 @@ class App extends React.Component {
 		);
 	};
 
+		// Функция получает значение пола и записывает его в стейт
+	// затем запускается проверка нужно ли разблокировать кнопку "очистить"
+	// и кнопку "рассчитать"
 	getStats = (e) => {
 		let newStats = this.state.stats;
 		newStats[e.target.name] = e.target.value;
@@ -49,6 +66,8 @@ class App extends React.Component {
 		);
 	};
 
+		// Функция получает значение физ.активности и записывает его в стейт
+	// затем запускается проверка нужно ли разблокировать кнопку очистки формы
 	getActivity = (e) => {
 		this.setState(
 			{
@@ -58,6 +77,8 @@ class App extends React.Component {
 		);
 	};
 
+	// Функция проверяет, все ли три поля "вес", "рост" и "возраст" заполнены
+	// Если да показывает кнопку "рассчитать", иначе - скрывает.
 	calcBtnSwitcher = () => {
 		const stats = Object.values(this.state.stats);
 		let summ = 0;
@@ -65,18 +86,22 @@ class App extends React.Component {
 			summ += Boolean(stats[i]);
 		}
 		if (summ === 3) {
-			console.log(`Кнопки активированы`);
 			this.setState({
 				calcBtnOff: false,
 			});
 		} else {
-			console.log(`Кнопки деактивированы`);
 			this.setState({
 				calcBtnOff: true,
 			});
 		}
 	};
 
+	// Функция проверяет, нужно ли разблокировать кнопку очистки формы
+	// Берутся текущие значения того, что указал пользователь (объект current)
+	// и сравниваются с настройками по-умолчанию (объект this.defaults)
+	// перед сравнением происходит преобразование в json
+	// если текущие значения равны дефолтным, кнопку очистки разблокировать нет смысла
+	// а если не равны - разблокируем, чтобы была возможность сделать сброс.
 	clearBtnSwitcher = () => {
 		const current = {
 			gender: this.state.gender,
@@ -87,21 +112,26 @@ class App extends React.Component {
 			},
 			activity: this.state.activity,
 		};
-		console.log("defaults = ", this.defaults);
-		console.log("current = ", current);
 		if (JSON.stringify(current) === JSON.stringify(this.defaults)) {
-			console.log(`current = defaults`);
 			this.setState({
 				clearBtnOff: true,
 			});
 		} else {
-			console.log(`current != defaults`);
 			this.setState({
 				clearBtnOff: false,
 			});
 		}
 	};
 
+	// Функция, выполняющая расчёт калорий по нажатию на кнопку "рассчитать"
+	// Использует утилиту с внутренними коэффициентами
+	// Базовая формула для мужчин: N = (10 × вес в килограммах) + (6,25 × рост в сантиметрах) − (5 × возраст в годах) + 5
+	// Базовая формула для женщин: N = (10 × вес в килограммах) + (6,25 × рост в сантиметрах) − (5 × возраст в годах) − 161
+	// Полученное значение (N) умножаем на коэффициент активности и округляем до целого. 
+	// Результат и будет нормой калорий для поддержания веса.
+	// Коэффициенты активности. Минимальная: 1.2. Низкая: 1.375. Средняя: 1.55. Высокая: 1.725. Очень высокая: 1.9.
+	// Для набора веса: прибавляем 15% от нормы к рассчитанной норме.
+	// Сброс веса: вычитаем 15% от нормы из рассчитанной нормы.
 	count = (e) => {
 		e.preventDefault();
 		let genderCoeff;
@@ -145,34 +175,26 @@ class App extends React.Component {
 		newCalories.norm = N; // ккал для поддержания веса
 		newCalories.min = Math.round(N - 0.15 * N); // ккал для снижения веса
 		newCalories.max = Math.round(N + 0.15 * N); // ккал для набора веса
-		console.log(newCalories);
 		this.setState({
 			calories: newCalories,
 			resultIsVisible: true,
 		});
 	};
 
-	resetForm = () => {
-		const defaults = {
-			gender: "male",
-			stats: {
-				age: "",
-				height: "",
-				weight: "",
-			},
-			activity: "min",
-		};
+	// Функция, включающаяся при нажатии на кнопку "Очистить"
+	// Устанавливает значения по-умолчанию
+	// Для объекта stats делается клонирование, чтобы не передавалась ссылка на объект
+	resetForm = (e) => {
+		e.preventDefault();
+		let defaultsStatsClone = Object.assign({}, this.defaults.stats);
 		this.setState(
 			{
-				resultIsVisible: false,
-				gender: defaults.gender,
-				stats: defaults.stats,
-				activity: defaults.activity,
-				clearBtnOff: true,
-				calcBtnOff: true,
-			},
-			() => {
-				console.log(this.state);
+				resultIsVisible: this.defaults.resultIsVisible,
+				gender: this.defaults.gender,
+				stats: defaultsStatsClone,
+				activity: this.defaults.activity,
+				clearBtnOff: this.defaults.clearBtnOff,
+				calcBtnOff: this.defaults.calcBtnOff,
 			}
 		);
 	};
