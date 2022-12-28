@@ -3,6 +3,7 @@ import React from "react";
 import Header from "@components/header/Header";
 import Form from "@components/form/Form";
 import Result from "@components/result/Result";
+import CountCalories from "@utils/CountCalories.js";
 
 class App extends React.Component {
 	constructor(props) {
@@ -49,7 +50,7 @@ class App extends React.Component {
 		);
 	};
 
-		// Функция получает значение пола и записывает его в стейт
+	// Функция получает значение пола и записывает его в стейт
 	// затем запускается проверка нужно ли разблокировать кнопку "очистить"
 	// и кнопку "рассчитать"
 	getStats = (e) => {
@@ -66,7 +67,7 @@ class App extends React.Component {
 		);
 	};
 
-		// Функция получает значение физ.активности и записывает его в стейт
+	// Функция получает значение физ.активности и записывает его в стейт
 	// затем запускается проверка нужно ли разблокировать кнопку очистки формы
 	getActivity = (e) => {
 		this.setState(
@@ -127,54 +128,20 @@ class App extends React.Component {
 	// Использует утилиту с внутренними коэффициентами
 	// Базовая формула для мужчин: N = (10 × вес в килограммах) + (6,25 × рост в сантиметрах) − (5 × возраст в годах) + 5
 	// Базовая формула для женщин: N = (10 × вес в килограммах) + (6,25 × рост в сантиметрах) − (5 × возраст в годах) − 161
-	// Полученное значение (N) умножаем на коэффициент активности и округляем до целого. 
+	// Полученное значение (N) умножаем на коэффициент активности и округляем до целого.
 	// Результат и будет нормой калорий для поддержания веса.
 	// Коэффициенты активности. Минимальная: 1.2. Низкая: 1.375. Средняя: 1.55. Высокая: 1.725. Очень высокая: 1.9.
 	// Для набора веса: прибавляем 15% от нормы к рассчитанной норме.
 	// Сброс веса: вычитаем 15% от нормы из рассчитанной нормы.
 	count = (e) => {
 		e.preventDefault();
-		let genderCoeff;
-		if (this.state.gender === "male") {
-			genderCoeff = 5;
-		} else if (this.state.gender === "female") {
-			genderCoeff = -161;
-		}
-
-		let activityCoeff;
-		switch (this.state.activity) {
-			case "min":
-				activityCoeff = 1.2;
-				break;
-			case "low":
-				activityCoeff = 1.375;
-				break;
-			case "medium":
-				activityCoeff = 1.55;
-				break;
-			case "high":
-				activityCoeff = 1.725;
-				break;
-			case "max":
-				activityCoeff = 1.9;
-				break;
-			default:
-				activityCoeff = 1.2;
-				break;
-		}
-
-		let N = Math.round(
-			(10 * this.state.stats.weight +
-				6.25 * this.state.stats.height -
-				5 * this.state.stats.age +
-				genderCoeff) *
-				activityCoeff
+		let newCalories = CountCalories(
+			this.state.gender,
+			this.state.activity,
+			this.state.stats.age,
+			this.state.stats.height,
+			this.state.stats.weight
 		);
-
-		let newCalories = {};
-		newCalories.norm = N; // ккал для поддержания веса
-		newCalories.min = Math.round(N - 0.15 * N); // ккал для снижения веса
-		newCalories.max = Math.round(N + 0.15 * N); // ккал для набора веса
 		this.setState({
 			calories: newCalories,
 			resultIsVisible: true,
@@ -187,16 +154,14 @@ class App extends React.Component {
 	resetForm = (e) => {
 		e.preventDefault();
 		let defaultsStatsClone = Object.assign({}, this.defaults.stats);
-		this.setState(
-			{
-				resultIsVisible: this.defaults.resultIsVisible,
-				gender: this.defaults.gender,
-				stats: defaultsStatsClone,
-				activity: this.defaults.activity,
-				clearBtnOff: this.defaults.clearBtnOff,
-				calcBtnOff: this.defaults.calcBtnOff,
-			}
-		);
+		this.setState({
+			resultIsVisible: this.defaults.resultIsVisible,
+			gender: this.defaults.gender,
+			stats: defaultsStatsClone,
+			activity: this.defaults.activity,
+			clearBtnOff: this.defaults.clearBtnOff,
+			calcBtnOff: this.defaults.calcBtnOff,
+		});
 	};
 
 	render() {
