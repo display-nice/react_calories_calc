@@ -10,7 +10,6 @@ const FormStats = ({ stats, getStats }) => {
 						<label className="heading" htmlFor="age">
 							Возраст
 						</label>
-						<span className="input__heading-unit">лет</span>
 					</div>
 					<div className="input__wrapper">
 						<input
@@ -24,6 +23,7 @@ const FormStats = ({ stats, getStats }) => {
 							maxLength="3"
 							required
 						/>
+						<span className="input__heading-unit">лет</span>
 					</div>
 				</div>
 				<div className="input">
@@ -31,7 +31,7 @@ const FormStats = ({ stats, getStats }) => {
 						<label className="heading" htmlFor="height">
 							Рост
 						</label>
-						<span className="input__heading-unit">см</span>
+						
 					</div>
 					<div className="input__wrapper">
 						<input
@@ -45,6 +45,7 @@ const FormStats = ({ stats, getStats }) => {
 							maxLength="3"
 							required
 						/>
+						<span className="input__heading-unit">см</span>
 					</div>
 				</div>
 				<div className="input">
@@ -52,7 +53,6 @@ const FormStats = ({ stats, getStats }) => {
 						<label className="heading" htmlFor="weight">
 							Вес
 						</label>
-						<span className="input__heading-unit">кг</span>
 					</div>
 					<div className="input__wrapper">
 						<input
@@ -66,6 +66,7 @@ const FormStats = ({ stats, getStats }) => {
 							maxLength="3"
 							required
 						/>
+						<span className="input__heading-unit">кг</span>
 					</div>
 				</div>
 			</div>

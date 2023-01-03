@@ -1,5 +1,5 @@
 import React from "react";
-import "./Hint.css";
+
 
 export default class Hint extends React.Component {
 	constructor(props) {
@@ -55,9 +55,8 @@ export default class Hint extends React.Component {
 							</li>
 							<li className="hint__item">SCSS, БЭМ;</li>
 							<li className="hint__item">
-								Компонентный подход React: два классовых компонента, остальные
-								функциональные. Всего восемь компонентов (родительские и
-								дочерние). Один компонент вынесен как утилита;
+								Компонентный подход React. Восемь компонентов (родительские и
+								дочерние). Одна утилита;
 							</li>
 							<li className="hint__item">
 								Взаимодействие компонентов и проброс данных реализованы через

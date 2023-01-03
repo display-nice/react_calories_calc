@@ -78,6 +78,9 @@
 }
 
 @media (max-width: 909px) {
+	.hint {
+		top: 9%;
+	}
 	.hint__wrapper {
 		gap: 5px;
 		-webkit-box-align: start;
