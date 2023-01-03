@@ -4,6 +4,7 @@ import Header from "@components/header/Header";
 import Form from "@components/form/Form";
 import Result from "@components/result/Result";
 import CountCalories from "@utils/CountCalories.js";
+import Hint from "@components/hint/Hint";
 
 class App extends React.Component {
 	constructor(props) {
@@ -167,6 +168,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<main className="main">
+				<Hint />
 				<div className="container">
 					<article className="counter">
 						<Header />
