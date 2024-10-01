@@ -1,132 +1,72 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-import Header from "@components/header/Header";
 import Form from "@components/form/Form";
 import Result from "@components/result/Result";
-import CountCalories from "@utils/CountCalories.js";
-import Hint from "@components/hint/Hint";
+import countCalories from "@utils/countCalories.js";
+// import Hint from "@components/hint/Hint";
 
-class App extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
+const App = () => {
+	const initialState = {
+		form: {
 			gender: "male",
-			stats: {
-				age: "",
-				height: "",
-				weight: "",
-			},
-			activity: "min",
-			calcBtnOff: true,
-			clearBtnOff: true,
-			resultIsVisible: false,
-			calories: {
-				norm: 3800,
-				min: 3300,
-				max: 4000,
-			},
+			age: "",
+			height: "",
+			weight: "",
+			activity: "minimal",
+		},
+		result: {
+			showResult: false,
+			calories: "",
+		},
+		calcBtnActive: false,
+		clearBtnActive: false,
+	};
+	const [form_state, setFormState] = useState(initialState.form);
+	const [result_state, setResultState] = useState(initialState.result);
+	const [calcBtnActive, setCalcBtnActive] = useState(initialState.calcBtnActive);
+	const [clearBtnActive, setClearBtnActive] = useState(initialState.clearBtnActive);
+
+	useEffect(() => {
+		const calcBtnCheckCond = () => {
+			return form_state.age !== "" && form_state.height !== "" && form_state.weight !== "";
 		};
-		this.defaults = {
-			resultIsVisible: false,
-			gender: "male",
-			stats: {
-				age: "",
-				height: "",
-				weight: "",
-			},
-			activity: "min",
-			clearBtnOff: true,
-			calcBtnOff: true,
+		const clearBtnCheckCond = () => {
+			return JSON.stringify(form_state) === JSON.stringify(initialState.form);
 		};
-	}
-
-	// Функция получает значение пола и записывает его в стейт
-	// затем запускается проверка нужно ли разблокировать кнопку очистки формы
-	getGender = (e) => {
-		this.setState(
-			{
-				gender: e.target.value,
-			},
-			() => this.clearBtnSwitcher()
-		);
-	};
-
-	// Функция получает значение пола и записывает его в стейт
-	// затем запускается проверка нужно ли разблокировать кнопку "очистить"
-	// и кнопку "рассчитать"
-	getStats = (e) => {
-		let newStats = this.state.stats;
-		newStats[e.target.name] = e.target.value;
-		this.setState(
-			{
-				stats: newStats,
-			},
-			() => {
-				this.calcBtnSwitcher();
-				this.clearBtnSwitcher();
-			}
-		);
-	};
-
-	// Функция получает значение физ.активности и записывает его в стейт
-	// затем запускается проверка нужно ли разблокировать кнопку очистки формы
-	getActivity = (e) => {
-		this.setState(
-			{
-				activity: e.target.value,
-			},
-			() => this.clearBtnSwitcher()
-		);
-	};
-
-	// Функция проверяет, все ли три поля "вес", "рост" и "возраст" заполнены
-	// Если да показывает кнопку "рассчитать", иначе - скрывает.
-	calcBtnSwitcher = () => {
-		const stats = Object.values(this.state.stats);
-		let summ = 0;
-		for (let i = 0; i <= stats.length; ++i) {
-			summ += Boolean(stats[i]);
-		}
-		if (summ === 3) {
-			this.setState({
-				calcBtnOff: false,
-			});
+		// Проверка, нужно ли разблокировать кнопку "Рассчитать"
+		// Для этого достаточно знать, что возраст, рост и вес заполнены
+		if (calcBtnCheckCond()) {
+			setCalcBtnActive(true);
 		} else {
-			this.setState({
-				calcBtnOff: true,
-			});
+			setCalcBtnActive(false);
 		}
-	};
 
-	// Функция проверяет, нужно ли разблокировать кнопку очистки формы
-	// Берутся текущие значения того, что указал пользователь (объект current)
-	// и сравниваются с настройками по-умолчанию (объект this.defaults)
-	// перед сравнением происходит преобразование в json
-	// если текущие значения равны дефолтным, кнопку очистки разблокировать нет смысла
-	// а если не равны - разблокируем, чтобы была возможность сделать сброс.
-	clearBtnSwitcher = () => {
-		const current = {
-			gender: this.state.gender,
-			stats: {
-				age: this.state.stats.age,
-				height: this.state.stats.height,
-				weight: this.state.stats.weight,
-			},
-			activity: this.state.activity,
-		};
-		if (JSON.stringify(current) === JSON.stringify(this.defaults)) {
-			this.setState({
-				clearBtnOff: true,
-			});
+		// Проверка, нужно ли разблокировать кнопку "Очистить"
+		if (clearBtnCheckCond()) {
+			// если true, значит все значения формы = по умолчанию, кнопка "Очистить" блокируется
+			setClearBtnActive(false);
 		} else {
-			this.setState({
-				clearBtnOff: false,
-			});
+			// если что-то в форме заполнялось (отлично от начальных настроек), то кнопка "Очистить" активируется
+			setClearBtnActive(true);
 		}
+	}, [form_state]);
+
+	const changeFormState = (e) => {
+		let { name, value } = e.target;
+		if (name === "age" || name === "weight" || name === "height") {
+			value = Number(value);
+		}
+		setFormState((form_state) => {
+			const newState = {
+				...form_state,
+				[name]: value,
+			};
+			return newState;
+		});
 	};
 
 	// Функция, выполняющая расчёт калорий по нажатию на кнопку "рассчитать"
-	// Использует утилиту с внутренними коэффициентами
+	// Использует утилиту countCalories с внутренними коэффициентами
 	// Базовая формула для мужчин: N = (10 × вес в килограммах) + (6,25 × рост в сантиметрах) − (5 × возраст в годах) + 5
 	// Базовая формула для женщин: N = (10 × вес в килограммах) + (6,25 × рост в сантиметрах) − (5 × возраст в годах) − 161
 	// Полученное значение (N) умножаем на коэффициент активности и округляем до целого.
@@ -134,65 +74,43 @@ class App extends React.Component {
 	// Коэффициенты активности. Минимальная: 1.2. Низкая: 1.375. Средняя: 1.55. Высокая: 1.725. Очень высокая: 1.9.
 	// Для набора веса: прибавляем 15% от нормы к рассчитанной норме.
 	// Сброс веса: вычитаем 15% от нормы из рассчитанной нормы.
-	count = (e) => {
+	const calcAndShowResult = (e) => {
 		e.preventDefault();
-		let newCalories = CountCalories(
-			this.state.gender,
-			this.state.activity,
-			this.state.stats.age,
-			this.state.stats.height,
-			this.state.stats.weight
-		);
-		this.setState({
-			calories: newCalories,
-			resultIsVisible: true,
+		const newCalories = countCalories(form_state);
+		setResultState({ showResult: true, calories: newCalories });
+	};
+
+	const clearForm = (e) => {
+		e.preventDefault();
+		setFormState(initialState.form);
+		setCalcBtnActive(initialState.calcBtnActive);
+		setClearBtnActive(initialState.clearBtnActive);
+		setResultState((result_state) => {
+			return {
+				...result_state,
+				showResult: false,
+			};
 		});
 	};
 
-	// Функция, включающаяся при нажатии на кнопку "Очистить"
-	// Устанавливает значения по-умолчанию
-	// Для объекта stats делается клонирование, чтобы не передавалась ссылка на объект
-	resetForm = (e) => {
-		e.preventDefault();
-		let defaultsStatsClone = Object.assign({}, this.defaults.stats);
-		this.setState({
-			resultIsVisible: this.defaults.resultIsVisible,
-			gender: this.defaults.gender,
-			stats: defaultsStatsClone,
-			activity: this.defaults.activity,
-			clearBtnOff: this.defaults.clearBtnOff,
-			calcBtnOff: this.defaults.calcBtnOff,
-		});
-	};
-
-	render() {
-		return (
-			<main className="main">
-				<Hint />
-				<div className="container">
-					<article className="counter">
-						<Header />
-						<Form
-							getGender={this.getGender}
-							getStats={this.getStats}
-							getActivity={this.getActivity}
-							calcBtnOff={this.state.calcBtnOff}
-							clearBtnOff={this.state.clearBtnOff}
-							count={this.count}
-							resetForm={this.resetForm}
-							gender={this.state.gender}
-							stats={this.state.stats}
-							activity={this.state.activity}
-						/>
-						<Result
-							calories={this.state.calories}
-							resultIsVisible={this.state.resultIsVisible}
-						/>
-					</article>
-				</div>
-			</main>
-		);
-	}
-}
-
+	return (
+		<main className="main">
+			{/* <Hint /> */}
+			<div className="container">
+				<article className="counter">
+					<h1 className="counter__heading heading-main">Калькулятор калорий</h1>
+					<Form
+						form_state={form_state}
+						changeFormState={changeFormState}
+						calcBtnActive={calcBtnActive}
+						clearBtnActive={clearBtnActive}
+						calcAndShowResult={calcAndShowResult}
+						clearForm={clearForm}
+					/>
+					<Result result_state={result_state} />
+				</article>
+			</div>
+		</main>
+	);
+};
 export { App };

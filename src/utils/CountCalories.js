@@ -1,4 +1,5 @@
-const CountCalories = (gender, activity, age, height, weight) => {
+const countCalories = (stats) => {
+	const { gender, activity, age, height, weight } = stats;
 	let genderCoeff;
 	if (gender === "male") {
 		genderCoeff = 5;
@@ -8,7 +9,7 @@ const CountCalories = (gender, activity, age, height, weight) => {
 
 	let activityCoeff;
 	switch (activity) {
-		case "min":
+		case "minimal":
 			activityCoeff = 1.2;
 			break;
 		case "low":
@@ -20,7 +21,7 @@ const CountCalories = (gender, activity, age, height, weight) => {
 		case "high":
 			activityCoeff = 1.725;
 			break;
-		case "max":
+		case "very_high":
 			activityCoeff = 1.9;
 			break;
 		default:
@@ -28,13 +29,7 @@ const CountCalories = (gender, activity, age, height, weight) => {
 			break;
 	}
 
-	let N = Math.round(
-		(10 * weight +
-			6.25 * height -
-			5 * age +
-			genderCoeff) *
-			activityCoeff
-	);
+	let N = Math.round((10 * weight + 6.25 * height - 5 * age + genderCoeff) * activityCoeff);
 
 	let newCalories = {};
 	newCalories.norm = N; // ккал для поддержания веса
@@ -42,4 +37,4 @@ const CountCalories = (gender, activity, age, height, weight) => {
 	newCalories.max = Math.round(N + 0.15 * N); // ккал для набора веса
 	return newCalories;
 };
-export default CountCalories
+export default countCalories;

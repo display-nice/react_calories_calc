@@ -5,44 +5,34 @@ import FormStats from "./FormStats";
 import FormActivity from "./FormActivity";
 
 const Form = (props) => {
-	const {
-		getGender,
-		getStats,
-		getActivity,
-		calcBtnOff,
-		clearBtnOff,
-		count,
-		resetForm,
-		gender,
-		activity,
-		stats,
-	} = props;
+	const { form_state, changeFormState, calcAndShowResult, clearForm, calcBtnActive, clearBtnActive, } = props;
+
 	return (
-		<form
-			className="counter__form form"
-			name="counter"
-			action="#"
-			method="post"
-		>
-			<FormGender gender={gender} getGender={(e) => getGender(e)} />
-			<FormStats stats={stats} getStats={(e) => getStats(e)} />
-			<FormActivity activity={activity} getActivity={(e) => getActivity(e)} />
+		<form className="counter__form form" name="counter" action="#" method="post">
+			<FormGender gender={form_state.gender} changeFormState={changeFormState} />
+			<FormStats
+				age={form_state.age}
+				height={form_state.height}
+				weight={form_state.weight}
+				changeFormState={changeFormState}
+			/>
+			<FormActivity activity={form_state.activity} changeFormState={changeFormState} />
 			<div className="form__submit">
 				<button
-					onClick={count}
+					onClick={calcAndShowResult}
 					className="form__submit-button button"
 					name="submit"
 					type="submit"
-					disabled={calcBtnOff}
+					disabled={!calcBtnActive}
 				>
 					Рассчитать
 				</button>
 				<button
-					onClick={resetForm}
+					onClick={clearForm}
 					className="form__reset-button"
 					name="reset"
 					type="reset"
-					disabled={clearBtnOff}
+					disabled={!clearBtnActive}
 				>
 					<svg
 						width="24"

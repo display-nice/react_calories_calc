@@ -1,13 +1,13 @@
 import React from "react";
 
-const FormGender = ({ gender, getGender }) => {
+const FormGender = ({ gender, changeFormState }) => {
 	return (
 		<div className="form__item">
 			<h2 className="heading">Пол</h2>
 			<ul className="switcher">
 				<li className="switcher__item">
 					<input
-						onChange={getGender}
+						onChange={changeFormState}
 						checked={gender === "male" ? true : false}
 						id="gender-male"
 						name="gender"
@@ -19,7 +19,7 @@ const FormGender = ({ gender, getGender }) => {
 				</li>
 				<li className="switcher__item">
 					<input
-						onChange={getGender}
+						onChange={changeFormState}
 						checked={gender === "female" ? true : false}
 						id="gender-female"
 						name="gender"
