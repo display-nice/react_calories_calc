@@ -49,27 +49,20 @@ export default class Hint extends React.Component {
 						<h2 className="hint__header">Особенности проекта:</h2>
 						<ul className="hint__list">
 							<li className="hint__item">
-								Адаптивно-отзывчивая вёрстка (320px-1920px): вычисление размеров
-								через calc() + брейкпоинт 1159px;
-							</li>
-							<li className="hint__item">SCSS, БЭМ;</li>
-							<li className="hint__item">
-								Компонентный подход React. Восемь компонентов (родительские и
-								дочерние). Одна утилита;
+								Лёгкий и приятный проект на чистом React
 							</li>
 							<li className="hint__item">
-								Взаимодействие компонентов и проброс данных реализованы через
-								пропсы;
+								Адаптивно-отзывчивая вёрстка (320px-1920px)
+							</li>
+							<li className="hint__item">SCSS, БЭМ</li>
+							<li className="hint__item">
+								Компонентный подход React
 							</li>
 							<li className="hint__item">
-								Изначально этот проект был написан мной на чистом Javascript,
-								затем подвергся рефакторингу на React;
+								Взаимодействие компонентов без стейт-менеджера
 							</li>
 							<li className="hint__item">
-								Пути к файлам сделаны алиасами с помощью npm-пакета react-app-alias;
-							</li>
-							<li className="hint__item">
-								Публикация проекта произведена через npm-пакет "gh-pages";
+								Состояние хранится в родительском компоненте и передаётся в дочерние через props
 							</li>
 						</ul>
 					</div>

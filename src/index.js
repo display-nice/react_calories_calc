@@ -1,14 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import {App} from '@components/app/App';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { App } from "./App";
 
-import '@css/style.scss';
-import '@css/normalize.css';
+import "@css/style.scss";
+import "@css/normalize.css";
 import "@css/Hint.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  // <React.StrictMode>
-    <App />
-  // </React.StrictMode>
+	<React.StrictMode>
+		<App />
+	</React.StrictMode>
 );

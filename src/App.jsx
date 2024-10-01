@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-import Form from "@components/form/Form";
-import Result from "@components/result/Result";
+import Form from "@components/form/_Form";
+import Result from "@components/Result";
 import countCalories from "@utils/countCalories.js";
-// import Hint from "@components/hint/Hint";
+import Hint from "@components/Hint";
 
 const App = () => {
 	const initialState = {
@@ -26,6 +26,8 @@ const App = () => {
 	const [calcBtnActive, setCalcBtnActive] = useState(initialState.calcBtnActive);
 	const [clearBtnActive, setClearBtnActive] = useState(initialState.clearBtnActive);
 
+	// Обработчик изменений в форме. Срабатывает на любое изменение в инпутах.
+	// Содержит логику активации\деактивации кнопок "рассчитать" и "очистить"
 	useEffect(() => {
 		const calcBtnCheckCond = () => {
 			return form_state.age !== "" && form_state.height !== "" && form_state.weight !== "";
@@ -33,6 +35,7 @@ const App = () => {
 		const clearBtnCheckCond = () => {
 			return JSON.stringify(form_state) === JSON.stringify(initialState.form);
 		};
+		
 		// Проверка, нужно ли разблокировать кнопку "Рассчитать"
 		// Для этого достаточно знать, что возраст, рост и вес заполнены
 		if (calcBtnCheckCond()) {
@@ -51,6 +54,8 @@ const App = () => {
 		}
 	}, [form_state]);
 
+	// Обработчик изменений в форме
+	// Работает с полями "пол", "возраст", "рост", "вес", "активность"
 	const changeFormState = (e) => {
 		let { name, value } = e.target;
 		if (name === "age" || name === "weight" || name === "height") {
@@ -66,20 +71,15 @@ const App = () => {
 	};
 
 	// Функция, выполняющая расчёт калорий по нажатию на кнопку "рассчитать"
-	// Использует утилиту countCalories с внутренними коэффициентами
-	// Базовая формула для мужчин: N = (10 × вес в килограммах) + (6,25 × рост в сантиметрах) − (5 × возраст в годах) + 5
-	// Базовая формула для женщин: N = (10 × вес в килограммах) + (6,25 × рост в сантиметрах) − (5 × возраст в годах) − 161
-	// Полученное значение (N) умножаем на коэффициент активности и округляем до целого.
-	// Результат и будет нормой калорий для поддержания веса.
-	// Коэффициенты активности. Минимальная: 1.2. Низкая: 1.375. Средняя: 1.55. Высокая: 1.725. Очень высокая: 1.9.
-	// Для набора веса: прибавляем 15% от нормы к рассчитанной норме.
-	// Сброс веса: вычитаем 15% от нормы из рассчитанной нормы.
+	// Использует утилиту countCalories с внутренними коэффициентами	
 	const calcAndShowResult = (e) => {
 		e.preventDefault();
 		const newCalories = countCalories(form_state);
 		setResultState({ showResult: true, calories: newCalories });
 	};
 
+	// Функция очистки формы при нажатии на кнопку "очистить"
+	// устанавливает параметры по-умолчанию во все поля, скрывает результат
 	const clearForm = (e) => {
 		e.preventDefault();
 		setFormState(initialState.form);
@@ -95,7 +95,7 @@ const App = () => {
 
 	return (
 		<main className="main">
-			{/* <Hint /> */}
+			<Hint />
 			<div className="container">
 				<article className="counter">
 					<h1 className="counter__heading heading-main">Калькулятор калорий</h1>
