@@ -35,7 +35,7 @@ const App = () => {
 		const clearBtnCheckCond = () => {
 			return JSON.stringify(form_state) === JSON.stringify(initialState.form);
 		};
-		
+
 		// Проверка, нужно ли разблокировать кнопку "Рассчитать"
 		// Для этого достаточно знать, что возраст, рост и вес заполнены
 		if (calcBtnCheckCond()) {
@@ -71,7 +71,7 @@ const App = () => {
 	};
 
 	// Функция, выполняющая расчёт калорий по нажатию на кнопку "рассчитать"
-	// Использует утилиту countCalories с внутренними коэффициентами	
+	// Использует утилиту countCalories с внутренними коэффициентами
 	const calcAndShowResult = (e) => {
 		e.preventDefault();
 		const newCalories = countCalories(form_state);

@@ -74,13 +74,15 @@
 	&__heading {
 		margin: 0;
 		margin-bottom: 22px;
-		color: var(--color-text-white);
+		padding-bottom: 10px;
+		color: var(--color-text-black);
 		text-align: center;
+		background: rgba(255, 255, 255, 0.5);
+		border-radius: 16px;
 	}
 	&__form {
 		margin-bottom: 20px;
 		border-radius: 16px;
-
 		padding: 32px 32px;
 		background-color: var(--color-background-main);
 	}
@@ -398,6 +400,7 @@
 }
 
 .form {
+	border: 2px solid rgba(0, 0, 0, 0.5);
 	.form__item {
 		margin: 0;
 		margin-bottom: adaptiveSize320Px(40, 20);
