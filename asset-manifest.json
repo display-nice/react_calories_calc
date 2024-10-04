@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/display-nice/react_calories_calc/static/css/main.d4b88f5a.css",
-    "main.js": "/display-nice/react_calories_calc/static/js/main.bea08af7.js",
-    "static/media/main-background.jpg": "/display-nice/react_calories_calc/static/media/main-background.ad4921bb4be0c7e37d4d.jpg",
-    "static/media/pt-sans-caption-regular.woff": "/display-nice/react_calories_calc/static/media/pt-sans-caption-regular.43636dfd381106232e11.woff",
-    "static/media/pt-sans-caption-bold.woff": "/display-nice/react_calories_calc/static/media/pt-sans-caption-bold.2c1db904a564f8c86325.woff",
-    "static/media/pt-sans-caption-bold.woff2": "/display-nice/react_calories_calc/static/media/pt-sans-caption-bold.bf2876902148566fcc5f.woff2",
-    "static/media/pt-sans-caption-regular.woff2": "/display-nice/react_calories_calc/static/media/pt-sans-caption-regular.50b8853f616cb781652f.woff2",
-    "static/media/icon-radio-checked.svg": "/display-nice/react_calories_calc/static/media/icon-radio-checked.b47b569a1a4946743fef.svg",
-    "index.html": "/display-nice/react_calories_calc/index.html",
-    "static/media/icon-radio-empty.svg": "/display-nice/react_calories_calc/static/media/icon-radio-empty.34e5e5608972fe4d7045.svg",
-    "main.d4b88f5a.css.map": "/display-nice/react_calories_calc/static/css/main.d4b88f5a.css.map",
-    "main.bea08af7.js.map": "/display-nice/react_calories_calc/static/js/main.bea08af7.js.map"
+    "main.css": "/react_calories_calc/static/css/main.d6f9a85e.css",
+    "main.js": "/react_calories_calc/static/js/main.bea08af7.js",
+    "static/media/main-background.jpg": "/react_calories_calc/static/media/main-background.ad4921bb4be0c7e37d4d.jpg",
+    "static/media/pt-sans-caption-regular.woff": "/react_calories_calc/static/media/pt-sans-caption-regular.43636dfd381106232e11.woff",
+    "static/media/pt-sans-caption-bold.woff": "/react_calories_calc/static/media/pt-sans-caption-bold.2c1db904a564f8c86325.woff",
+    "static/media/pt-sans-caption-bold.woff2": "/react_calories_calc/static/media/pt-sans-caption-bold.bf2876902148566fcc5f.woff2",
+    "static/media/pt-sans-caption-regular.woff2": "/react_calories_calc/static/media/pt-sans-caption-regular.50b8853f616cb781652f.woff2",
+    "static/media/icon-radio-checked.svg": "/react_calories_calc/static/media/icon-radio-checked.b47b569a1a4946743fef.svg",
+    "index.html": "/react_calories_calc/index.html",
+    "static/media/icon-radio-empty.svg": "/react_calories_calc/static/media/icon-radio-empty.34e5e5608972fe4d7045.svg",
+    "main.d6f9a85e.css.map": "/react_calories_calc/static/css/main.d6f9a85e.css.map",
+    "main.bea08af7.js.map": "/react_calories_calc/static/js/main.bea08af7.js.map"
   },
   "entrypoints": [
-    "static/css/main.d4b88f5a.css",
+    "static/css/main.d6f9a85e.css",
     "static/js/main.bea08af7.js"
   ]
 }
