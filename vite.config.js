@@ -10,6 +10,12 @@ export default defineConfig({
 	// Проект публикуется как project page: https://display-nice.github.io/react_calories_calc/
 	// Без этого base все абсолютные пути к ассетам уедут в корень домена и страница будет пустой.
 	base: "/react_calories_calc/",
+	server: {
+		host: "127.0.0.1",
+	},
+	preview: {
+		host: "127.0.0.1",
+	},
 	build: {
 		// Стандартная для Vite папка сборки
 		outDir: "dist",
