@@ -9,7 +9,11 @@
 /coverage
 
 # production
-/build
+/dist
+
+# agent workspace
+/.perch
+/AGENTS.md
 
 # misc
 .DS_Store
